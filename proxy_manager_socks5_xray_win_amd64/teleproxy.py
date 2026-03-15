@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-ProxyTg — минимальный консольный менеджер прокси для Telegram.
-Запускает Xray-core как subprocess и держит локальный SOCKS5 порт.
+proxy_manager_socks5_xray — локальный SOCKS5 прокси через Xray (VLESS/Reality).
+Подходит для любого приложения с поддержкой SOCKS5; изначально делался под Telegram.
 """
 
 import subprocess
@@ -14,7 +14,7 @@ import argparse
 from urllib.parse import urlparse, parse_qs, unquote
 
 # Конфигурация по умолчанию
-XRAY_BINARY = "./xray-core/xray"
+XRAY_BINARY = r".\xray-core\xray.exe"
 CONFIG_FILE = "client_config.json"
 LOCAL_SOCKS_PORT = 2080
 
@@ -23,20 +23,22 @@ def find_xray() -> str:
     """Ищет бинарник xray: рядом со скриптом, в PATH или в текущей директории."""
     script_dir = os.path.dirname(os.path.abspath(__file__))
     candidates = [
-        os.path.join(script_dir, "xray-core", "xray"),
-        os.path.join(script_dir, "xray-core", "Xray"),
-        os.path.join(script_dir, "xray"),
-        os.path.join(script_dir, "Xray"),
-        "xray",
-        "Xray",
+        os.path.join(script_dir, "xray-core", "xray.exe"),
+        os.path.join(script_dir, "xray.exe"),
+        "xray.exe",
     ]
     for path in candidates:
-        if os.path.isfile(path) and os.access(path, os.X_OK):
+        if os.path.isfile(path):
             return path
-        if path in ("xray", "Xray") and subprocess.run(
-            ["which", path], capture_output=True
-        ).returncode == 0:
-            return path
+        if path == "xray.exe":
+            try:
+                result = subprocess.run(
+                    ["where", "xray.exe"], capture_output=True
+                )
+                if result.returncode == 0:
+                    return path
+            except FileNotFoundError:
+                pass
     return XRAY_BINARY
 
 
@@ -146,7 +148,7 @@ def get_socks_port(config: dict) -> int:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="ProxyTg — локальный SOCKS5 прокси через Xray (VLESS/Reality)"
+        description="proxy_manager_socks5_xray — локальный SOCKS5 прокси через Xray (VLESS/Reality)"
     )
     parser.add_argument(
         "-c", "--config",
@@ -156,7 +158,7 @@ def main():
     parser.add_argument(
         "-x", "--xray",
         default=None,
-        help="Путь к бинарнику Xray (по умолчанию: ./xray или в PATH)",
+        help="Путь к бинарнику Xray (по умолчанию: .\\xray-core\\xray.exe или в PATH)",
     )
     parser.add_argument(
         "-v", "--vless",
@@ -176,7 +178,7 @@ def main():
     if not os.path.isfile(xray_path):
         print(f"Ошибка: Xray не найден: {xray_path}")
         print("Скачайте с https://github.com/XTLS/Xray-core/releases")
-        print("Для Linux: Xray-linux-64.zip (amd64) или Xray-linux-arm64-v8a.zip")
+        print("Для Windows: Xray-windows-64.zip (amd64) или Xray-windows-arm64-v8a.zip")
         sys.exit(1)
 
     if args.vless:
@@ -196,15 +198,14 @@ def main():
 
     if not args.quiet:
         print("=" * 50)
-        print("  ProxyTg — прокси для Telegram")
+        print("  proxy_manager_socks5_xray — SOCKS5 127.0.0.1:" + str(socks_port))
         print("=" * 50)
         print(f"  Xray:     {xray_path}")
         print(f"  Конфиг:   {config_path}")
-        print(f"  SOCKS5:   127.0.0.1:{socks_port}")
+        print(f"  SOCKS5:   127.0.0.1:{socks_port} (любое приложение)")
         print("=" * 50)
-        print("  Настройте Telegram:")
-        print("  Settings → Data and Storage → Proxy → SOCKS5")
-        print(f"  Host: 127.0.0.1  Port: {socks_port}")
+        print("  Telegram: Settings → Data and Storage → Proxy → SOCKS5")
+        print(f"            Host: 127.0.0.1  Port: {socks_port}")
         print("=" * 50)
         print("  Ctrl+C для остановки")
         print()

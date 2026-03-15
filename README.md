@@ -1,8 +1,8 @@
-# ProxyTg
+# proxy_manager_socks5_xray
 
-**Сonsole proxy manager for Telegram.**
+**Local SOCKS5 proxy manager powered by Xray-core.**
 
-Runs [Xray-core](https://github.com/XTLS/Xray-core) as a subprocess and exposes a local SOCKS5 port. No GUI, no root, no extra dependencies — just Python and one script.
+Runs [Xray-core](https://github.com/XTLS/Xray-core) as a subprocess and exposes a local SOCKS5 port. Any application that supports SOCKS5 (browsers, messengers, CLI tools) can use it. No GUI, no root — just Python and one script.
 
 Supports **VLESS + Reality** — a modern protocol resilient to blocking.
 
@@ -12,11 +12,11 @@ Supports **VLESS + Reality** — a modern protocol resilient to blocking.
 
 ## Features
 
-- Local SOCKS5 proxy for Telegram (desktop and mobile)
+- Local SOCKS5 proxy for any application (browsers, Telegram, etc.)
 - VLESS + Reality support (Xray-core 26+)
 - Runs on **macOS**, **Linux**, and **Windows**
 - One-command run, no installation
-- Works with Telethon, Pyrogram, and any SOCKS5 client
+- Originally designed for Telegram; works with Telethon, Pyrogram, and any SOCKS5 client
 
 ## Download
 
@@ -24,9 +24,9 @@ Pick the archive for your OS:
 
 | Platform | Archive | Architecture |
 |----------|---------|--------------|
-| macOS | `ProxyTg_mac_arm64.zip` | ARM64 (Apple Silicon) |
-| Linux | `ProxyTg_linux_amd64.zip` | x86-64 (amd64) |
-| Windows | `ProxyTg_win_amd64.zip` | x86-64 (amd64) |
+| macOS | `proxy_manager_socks5_xray_mac_arm64.zip` | ARM64 (Apple Silicon) |
+| Linux | `proxy_manager_socks5_xray_linux_amd64.zip` | x86-64 (amd64) |
+| Windows | `proxy_manager_socks5_xray_win_amd64.zip` | x86-64 (amd64) |
 
 Each archive is self-contained: script + Xray binary + geo data.
 
@@ -42,7 +42,7 @@ Each archive is self-contained: script + Xray binary + geo data.
 Edit `client_config.json` in your platform folder with your VLESS Reality server details:
 
 | Field | Description |
-|-------|--------------|
+|-------|-------------|
 | `address` | Server IP or domain |
 | `port` | Port (usually 443) |
 | `id` | User UUID |
@@ -155,7 +155,7 @@ Fill in `client_config.json` (see example above) and run.
 **macOS / Linux:**
 
 ```bash
-cd proxy_tg_mac_arm64    # or proxy_tg_linux_amd64
+cd proxy_manager_socks5_xray_mac_arm64    # or proxy_manager_socks5_xray_linux_amd64
 python3 teleproxy.py
 ```
 
@@ -164,15 +164,34 @@ python3 teleproxy.py
 **Windows:**
 
 ```cmd
-cd proxy_tg_win_amd64
+cd proxy_manager_socks5_xray_win_amd64
 python teleproxy.py
 ```
 
-### 3. Configure Telegram
+The proxy will listen on **127.0.0.1:2080** (or the port set in config). Point any SOCKS5-capable app to this address.
 
-In Telegram Desktop:
+## Using with other applications
 
-**Settings → Data and Storage → Proxy → Add Proxy**
+The proxy is a standard **SOCKS5** server on `127.0.0.1:2080` (no auth). Use it with:
+
+- **Browsers** — set system or browser proxy to SOCKS5, host `127.0.0.1`, port `2080`
+- **curl / wget** — e.g. `curl --socks5 127.0.0.1:2080 https://example.com`
+- **Any app** that supports SOCKS5 proxy (messengers, IDE, etc.)
+
+To verify it works:
+
+```bash
+curl --socks5 127.0.0.1:2080 https://api.telegram.org
+```
+
+If you get JSON back, the proxy is up.
+
+## Using with Telegram
+
+The project was originally made for Telegram. To use it with Telegram:
+
+**Telegram Desktop:**  
+**Settings → Advanced → Proxy server settings → Add proxy**
 
 | Parameter | Value |
 |-----------|-------|
@@ -180,28 +199,11 @@ In Telegram Desktop:
 | Host | `127.0.0.1` |
 | Port | `2080` |
 
-On Telegram Mobile: Settings → Data and Storage → Proxy → SOCKS5 → same values.
+On Telegram Mobile: same path in Settings, then SOCKS5 with the same values.
 
-## Command-line options
+### Telethon / Pyrogram
 
-```bash
-python3 teleproxy.py                          # default config
-python3 teleproxy.py --vless "vless://..."    # from VLESS link (saves config)
-python3 teleproxy.py -c my_config.json        # custom config file
-python3 teleproxy.py -x /usr/local/bin/xray   # custom Xray path
-python3 teleproxy.py -q                        # quiet (minimal output)
-```
-
-| Flag | Description |
-|------|-------------|
-| `-v`, `--vless` | VLESS URI — generates and saves config |
-| `-c`, `--config` | Path to JSON config (default: `client_config.json`) |
-| `-x`, `--xray` | Path to Xray binary |
-| `-q`, `--quiet` | Minimal output |
-
-## Using with Telethon / Pyrogram
-
-Run ProxyTg in one terminal, your bot in another:
+Run the proxy in one terminal, your bot in another:
 
 ```python
 # Telethon
@@ -228,16 +230,33 @@ app = Client(
 )
 ```
 
+## Command-line options
+
+```bash
+python3 teleproxy.py                          # default config
+python3 teleproxy.py --vless "vless://..."    # from VLESS link (saves config)
+python3 teleproxy.py -c my_config.json        # custom config file
+python3 teleproxy.py -x /usr/local/bin/xray   # custom Xray path
+python3 teleproxy.py -q                        # quiet (minimal output)
+```
+
+| Flag | Description |
+|------|-------------|
+| `-v`, `--vless` | VLESS URI — generates and saves config |
+| `-c`, `--config` | Path to JSON config (default: `client_config.json`) |
+| `-x`, `--xray` | Path to Xray binary |
+| `-q`, `--quiet` | Minimal output |
+
 ## Project structure
 
 ```
-proxy_tg/
+proxy_manager_socks5_xray/
 │
 ├── README.md
 ├── README_RU.md
 ├── LICENSE
 │
-├── proxy_tg_mac_arm64/      # macOS (ARM64 / Apple Silicon)
+├── proxy_manager_socks5_xray_mac_arm64/      # macOS (ARM64 / Apple Silicon)
 │   ├── teleproxy.py
 │   ├── client_config.json
 │   ├── README.md
@@ -247,7 +266,7 @@ proxy_tg/
 │       ├── geoip.dat
 │       └── geosite.dat
 │
-├── proxy_tg_linux_amd64/    # Linux (x86-64 / amd64)
+├── proxy_manager_socks5_xray_linux_amd64/    # Linux (x86-64 / amd64)
 │   ├── teleproxy.py
 │   ├── client_config.json
 │   ├── README.md
@@ -257,7 +276,7 @@ proxy_tg/
 │       ├── geoip.dat
 │       └── geosite.dat
 │
-└── proxy_tg_win_amd64/      # Windows (x86-64 / amd64)
+└── proxy_manager_socks5_xray_win_amd64/      # Windows (x86-64 / amd64)
     ├── teleproxy.py
     ├── client_config.json
     ├── README.md
@@ -283,14 +302,8 @@ The Xray binary is not signed by Apple (normal for open-source). To allow it:
 **Q: Port 2080 is already in use. How do I change it?**  
 Change `"port": 2080` in `client_config.json` to any free port (e.g. 1080, 9050).
 
-**Q: How do I check that the proxy works?**
-```bash
-curl --socks5 127.0.0.1:2080 https://api.telegram.org
-```
-If you get JSON back, the proxy is working.
-
 **Q: Do I need my own server?**  
-Yes. You need a VPS with an Xray server (VLESS + Reality). That's the server side; ProxyTg is the client only.
+Yes. You need a VPS with an Xray server (VLESS + Reality). That's the server side; proxy_manager_socks5_xray is the client only.
 
 **Q: How do I update Xray-core?**  
 Download a new binary from [releases](https://github.com/XTLS/Xray-core/releases) and replace the file in the `xray-core/` folder.
@@ -299,7 +312,7 @@ Download a new binary from [releases](https://github.com/XTLS/Xray-core/releases
 
 | Component | Version |
 |-----------|--------|
-| ProxyTg | 0.1.2 |
+| proxy_manager_socks5_xray | 0.1.2 |
 | Xray-core | 26.2.6 |
 
 ## Notes

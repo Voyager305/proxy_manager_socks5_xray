@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-ProxyTg — минимальный консольный менеджер прокси для Telegram.
-Запускает Xray-core как subprocess и держит локальный SOCKS5 порт.
+proxy_manager_socks5_xray — локальный SOCKS5 прокси через Xray (VLESS/Reality).
+Подходит для любого приложения с поддержкой SOCKS5; изначально делался под Telegram.
 """
 
 import subprocess
@@ -146,7 +146,7 @@ def get_socks_port(config: dict) -> int:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="ProxyTg — локальный SOCKS5 прокси через Xray (VLESS/Reality)"
+        description="proxy_manager_socks5_xray — локальный SOCKS5 прокси через Xray (VLESS/Reality)"
     )
     parser.add_argument(
         "-c", "--config",
@@ -176,7 +176,7 @@ def main():
     if not os.path.isfile(xray_path):
         print(f"Ошибка: Xray не найден: {xray_path}")
         print("Скачайте с https://github.com/XTLS/Xray-core/releases")
-        print("Для macOS: darwin-arm64.zip или darwin-amd64.zip")
+        print("Для Linux: Xray-linux-64.zip (amd64) или Xray-linux-arm64-v8a.zip")
         sys.exit(1)
 
     if args.vless:
@@ -196,15 +196,14 @@ def main():
 
     if not args.quiet:
         print("=" * 50)
-        print("  ProxyTg — прокси для Telegram")
+        print("  proxy_manager_socks5_xray — SOCKS5 127.0.0.1:" + str(socks_port))
         print("=" * 50)
         print(f"  Xray:     {xray_path}")
         print(f"  Конфиг:   {config_path}")
-        print(f"  SOCKS5:   127.0.0.1:{socks_port}")
+        print(f"  SOCKS5:   127.0.0.1:{socks_port} (любое приложение)")
         print("=" * 50)
-        print("  Настройте Telegram:")
-        print("  Settings → Data and Storage → Proxy → SOCKS5")
-        print(f"  Host: 127.0.0.1  Port: {socks_port}")
+        print("  Telegram: Settings → Data and Storage → Proxy → SOCKS5")
+        print(f"            Host: 127.0.0.1  Port: {socks_port}")
         print("=" * 50)
         print("  Ctrl+C для остановки")
         print()

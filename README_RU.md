@@ -1,8 +1,8 @@
-# ProxyTg
+# proxy_manager_socks5_xray
 
-**Консольный прокси-менеджер для Telegram.**
+**Локальный SOCKS5 прокси-менеджер на базе Xray-core.**
 
-Запускает [Xray-core](https://github.com/XTLS/Xray-core) как subprocess и поднимает локальный SOCKS5 порт. Без GUI, без root, без лишних зависимостей — только Python и один скрипт.
+Запускает [Xray-core](https://github.com/XTLS/Xray-core) как subprocess и поднимает локальный SOCKS5 порт. Любое приложение с поддержкой SOCKS5 (браузеры, мессенджеры, CLI) может им пользоваться. Без GUI, без root — только Python и один скрипт.
 
 Поддерживает протокол **VLESS + Reality** — современный и устойчивый к блокировкам.
 
@@ -12,11 +12,11 @@
 
 ## Возможности
 
-- Локальный SOCKS5 прокси для Telegram (десктоп и мобильный)
+- Локальный SOCKS5 прокси для любого приложения (браузеры, Telegram и т.д.)
 - Поддержка VLESS + Reality (Xray-core 26+)
 - Работает на **macOS**, **Linux** и **Windows**
 - Запуск одной командой, без установки
-- Совместимость с Telethon, Pyrogram и любыми SOCKS5-клиентами
+- Изначально делался под Telegram; совместим с Telethon, Pyrogram и любыми SOCKS5-клиентами
 
 ## Скачивание
 
@@ -24,9 +24,9 @@
 
 | Платформа | Архив | Архитектура |
 |-----------|-------|-------------|
-| macOS | `ProxyTg_mac_arm64.zip` | ARM64 (Apple Silicon) |
-| Linux | `ProxyTg_linux_amd64.zip` | x86-64 (amd64) |
-| Windows | `ProxyTg_win_amd64.zip` | x86-64 (amd64) |
+| macOS | `proxy_manager_socks5_xray_mac_arm64.zip` | ARM64 (Apple Silicon) |
+| Linux | `proxy_manager_socks5_xray_linux_amd64.zip` | x86-64 (amd64) |
+| Windows | `proxy_manager_socks5_xray_win_amd64.zip` | x86-64 (amd64) |
 
 Каждый архив — самодостаточный пакет: скрипт + бинарник Xray + geo-файлы.
 
@@ -155,7 +155,7 @@ python3 teleproxy.py
 **macOS / Linux:**
 
 ```bash
-cd proxy_tg_mac_arm64    # или proxy_tg_linux_amd64
+cd proxy_manager_socks5_xray_mac_arm64    # или proxy_manager_socks5_xray_linux_amd64
 python3 teleproxy.py
 ```
 
@@ -164,15 +164,34 @@ python3 teleproxy.py
 **Windows:**
 
 ```cmd
-cd proxy_tg_win_amd64
+cd proxy_manager_socks5_xray_win_amd64
 python teleproxy.py
 ```
 
-### 3. Настройте Telegram
+Прокси будет слушать **127.0.0.1:2080** (или порт из конфига). Укажите этот адрес в любом приложении с поддержкой SOCKS5.
 
-В Telegram Desktop:
+## Использование с другими приложениями
 
-**Настройки → Данные и хранилище → Прокси → Добавить прокси**
+Прокси — это обычный **SOCKS5** сервер на `127.0.0.1:2080` (без авторизации). Использовать можно с:
+
+- **Браузерами** — настройка системного или браузерного прокси: SOCKS5, хост `127.0.0.1`, порт `2080`
+- **curl / wget** — например: `curl --socks5 127.0.0.1:2080 https://example.com`
+- **Любым приложением** с поддержкой SOCKS5 (мессенджеры, IDE и т.д.)
+
+Проверка работы:
+
+```bash
+curl --socks5 127.0.0.1:2080 https://api.telegram.org
+```
+
+Если возвращается JSON — прокси работает.
+
+## Использование с Telegram
+
+Проект изначально делался под Telegram. Как настроить:
+
+**Telegram Desktop:**  
+**Настройки → Продвинутые настройки → Настройки прокси сервера → Добавить прокси**
 
 | Параметр | Значение |
 |----------|----------|
@@ -182,26 +201,9 @@ python teleproxy.py
 
 В мобильном Telegram: те же параметры в разделе прокси.
 
-## Опции запуска
+### Telethon / Pyrogram
 
-```bash
-python3 teleproxy.py                          # запуск с настройками по умолчанию
-python3 teleproxy.py --vless "vless://..."    # запуск из VLESS-ссылки (сохраняет конфиг)
-python3 teleproxy.py -c my_config.json        # другой конфиг
-python3 teleproxy.py -x /usr/local/bin/xray   # свой путь к Xray
-python3 teleproxy.py -q                        # тихий режим (без логов)
-```
-
-| Флаг | Описание |
-|------|----------|
-| `-v`, `--vless` | VLESS URI — автоматически генерирует и сохраняет конфиг |
-| `-c`, `--config` | Путь к JSON-конфигу (по умолчанию `client_config.json`) |
-| `-x`, `--xray` | Путь к бинарнику Xray |
-| `-q`, `--quiet` | Минимальный вывод |
-
-## Использование с Telethon / Pyrogram
-
-Запустите ProxyTg в одном терминале, бот — в другом:
+Запустите прокси в одном терминале, бот — в другом:
 
 ```python
 # Telethon
@@ -228,16 +230,33 @@ app = Client(
 )
 ```
 
+## Опции запуска
+
+```bash
+python3 teleproxy.py                          # запуск с настройками по умолчанию
+python3 teleproxy.py --vless "vless://..."    # запуск из VLESS-ссылки (сохраняет конфиг)
+python3 teleproxy.py -c my_config.json        # другой конфиг
+python3 teleproxy.py -x /usr/local/bin/xray   # свой путь к Xray
+python3 teleproxy.py -q                        # тихий режим (без логов)
+```
+
+| Флаг | Описание |
+|------|----------|
+| `-v`, `--vless` | VLESS URI — автоматически генерирует и сохраняет конфиг |
+| `-c`, `--config` | Путь к JSON-конфигу (по умолчанию `client_config.json`) |
+| `-x`, `--xray` | Путь к бинарнику Xray |
+| `-q`, `--quiet` | Минимальный вывод |
+
 ## Структура проекта
 
 ```
-proxy_tg/
+proxy_manager_socks5_xray/
 │
 ├── README.md
 ├── README_RU.md
 ├── LICENSE
 │
-├── proxy_tg_mac_arm64/      # macOS (ARM64 / Apple Silicon)
+├── proxy_manager_socks5_xray_mac_arm64/      # macOS (ARM64 / Apple Silicon)
 │   ├── teleproxy.py
 │   ├── client_config.json
 │   ├── README.md
@@ -247,7 +266,7 @@ proxy_tg/
 │       ├── geoip.dat
 │       └── geosite.dat
 │
-├── proxy_tg_linux_amd64/    # Linux (x86-64 / amd64)
+├── proxy_manager_socks5_xray_linux_amd64/   # Linux (x86-64 / amd64)
 │   ├── teleproxy.py
 │   ├── client_config.json
 │   ├── README.md
@@ -257,7 +276,7 @@ proxy_tg/
 │       ├── geoip.dat
 │       └── geosite.dat
 │
-└── proxy_tg_win_amd64/      # Windows (x86-64 / amd64)
+└── proxy_manager_socks5_xray_win_amd64/     # Windows (x86-64 / amd64)
     ├── teleproxy.py
     ├── client_config.json
     ├── README.md
@@ -283,14 +302,8 @@ proxy_tg/
 **В: Порт 2080 уже занят, как сменить?**  
 Измените `"port": 2080` в `client_config.json` на любой свободный (например, 1080, 9050).
 
-**В: Как проверить, что прокси работает?**
-```bash
-curl --socks5 127.0.0.1:2080 https://api.telegram.org
-```
-Если возвращается JSON — прокси работает.
-
 **В: Нужен ли свой сервер?**  
-Да, нужен VPS с настроенным Xray-сервером (VLESS + Reality). Это серверная часть, ProxyTg — только клиент.
+Да, нужен VPS с настроенным Xray-сервером (VLESS + Reality). Это серверная часть, proxy_manager_socks5_xray — только клиент.
 
 **В: Как обновить Xray-core?**  
 Скачайте новый бинарник с [releases](https://github.com/XTLS/Xray-core/releases) и замените файл в папке `xray-core/`.
@@ -299,7 +312,7 @@ curl --socks5 127.0.0.1:2080 https://api.telegram.org
 
 | Компонент | Версия |
 |-----------|--------|
-| ProxyTg | 0.1.2 |
+| proxy_manager_socks5_xray | 0.1.2 |
 | Xray-core | 26.2.6 |
 
 ## Примечания

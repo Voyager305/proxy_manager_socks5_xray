@@ -1,6 +1,6 @@
-# ProxyTg
+# proxy_manager_socks5_xray
 
-Минимальный консольный прокси-менеджер для Telegram. Запускает Xray-core как subprocess и поднимает локальный SOCKS5 порт — без GUI, без root, без лишних зависимостей.
+Локальный SOCKS5 прокси через Xray-core (VLESS + Reality). Подходит для любого приложения с поддержкой SOCKS5; изначально делался под Telegram. Без GUI, без root.
 
 ## Требования
 

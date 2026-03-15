@@ -1,6 +1,6 @@
-# ProxyTg
+# proxy_manager_socks5_xray
 
-Минимальный консольный прокси-менеджер для Telegram. Запускает Xray-core как subprocess и поднимает локальный SOCKS5 порт — без GUI, без лишних зависимостей.
+Локальный SOCKS5 прокси через Xray-core (VLESS + Reality). Подходит для любого приложения с поддержкой SOCKS5; изначально делался под Telegram. Без GUI, без root.
 
 ## Требования
 
@@ -103,7 +103,7 @@ vless://UUID@ADDRESS:PORT?type=tcp&security=reality&pbk=PASSWORD&fp=chrome&sni=S
    python teleproxy.py
    ```
 
-3. **Настройте Telegram:** Settings → Data and Storage → Proxy → SOCKS5 → Host: `127.0.0.1`, Port: `2080`
+3. **Укажите прокси в приложении:** SOCKS5, Host: `127.0.0.1`, Port: `2080`. Для Telegram: Settings → Data and Storage → Proxy → SOCKS5.
 
 ## Опции запуска
 
