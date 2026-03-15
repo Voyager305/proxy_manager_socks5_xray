@@ -11,5 +11,3 @@ __pycache__/
 
 # Release archives
 dist/
-
-RELEASE_NOTES.md/
