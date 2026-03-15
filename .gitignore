@@ -7,6 +7,9 @@ __pycache__/
 *.log
 .vscode/
 .idea/
+.gitignore
 
 # Release archives
 dist/
+
+RELEASE_NOTES.md/
