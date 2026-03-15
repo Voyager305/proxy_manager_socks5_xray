@@ -1,4 +1,4 @@
-## TeleProxy v0.1.1
+## ProxyTg v0.1.1
 
 Минимальный консольный прокси-менеджер для Telegram на базе Xray-core (VLESS + Reality).
 
@@ -6,9 +6,9 @@
 
 | Файл | Платформа | Архитектура |
 |------|-----------|-------------|
-| `TeleProxy_v0.1.1_mac.zip` | macOS | ARM64 (Apple Silicon) |
-| `TeleProxy_v0.1.1_linux.zip` | Linux | x86-64 (amd64) |
-| `TeleProxy_v0.1.1_win.zip` | Windows | x86-64 (amd64) |
+| `ProxyTg_v0.1.1_mac.zip` | macOS | ARM64 (Apple Silicon) |
+| `ProxyTg_v0.1.1_linux.zip` | Linux | x86-64 (amd64) |
+| `ProxyTg_v0.1.1_win.zip` | Windows | x86-64 (amd64) |
 
 ### Быстрый старт
 
@@ -20,6 +20,6 @@
 
 ### Компоненты
 
-- TeleProxy 0.1.1
+- ProxyTg 0.1.1
 - Xray-core 26.2.6
 - Python 3.7+

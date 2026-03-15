@@ -1,4 +1,4 @@
-# TeleProxy
+# ProxyTg
 
 Минимальный консольный прокси-менеджер для Telegram. Запускает Xray-core как subprocess и поднимает локальный SOCKS5 порт — без GUI, без лишних зависимостей.
 
@@ -94,13 +94,13 @@ vless://UUID@ADDRESS:PORT?type=tcp&security=reality&pbk=PASSWORD&fp=chrome&sni=S
         id   address  port                            password              serverName      shortId
 ```
 
-2. **Запустите:**
+2. **Запустите** (один из способов):
    ```cmd
+   :: Способ A — из VLESS-ссылки (проще, конфиг сохранится автоматически):
+   python teleproxy.py --vless "vless://UUID@HOST:PORT?type=tcp&security=reality&pbk=KEY&fp=chrome&sni=SNI&sid=SID&flow=xtls-rprx-vision#name"
+
+   :: Способ B — из JSON-конфига (заполните client_config.json вручную):
    python teleproxy.py
-   ```
-   Или через PowerShell:
-   ```powershell
-   python .\teleproxy.py
    ```
 
 3. **Настройте Telegram:** Settings → Data and Storage → Proxy → SOCKS5 → Host: `127.0.0.1`, Port: `2080`
@@ -108,6 +108,7 @@ vless://UUID@ADDRESS:PORT?type=tcp&security=reality&pbk=PASSWORD&fp=chrome&sni=S
 ## Опции запуска
 
 ```cmd
+python teleproxy.py --vless "vless://..."    :: из VLESS-ссылки
 python teleproxy.py -c client_config.json    :: другой конфиг
 python teleproxy.py -x C:\path\to\xray.exe   :: путь к бинарнику
 python teleproxy.py -q                       :: тихий режим

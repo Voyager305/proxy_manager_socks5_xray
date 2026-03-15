@@ -9,7 +9,7 @@ mkdir -p "$DIST_DIR"
 
 for platform in mac linux win; do
     src="proxy_tg_${platform}_v${VERSION}"
-    archive="TeleProxy_v${VERSION}_${platform}.zip"
+    archive="ProxyTg_v${VERSION}_${platform}.zip"
 
     if [ ! -d "$src" ]; then
         echo "SKIP: $src not found"
@@ -26,4 +26,4 @@ echo "Release archives:"
 ls -lh "$DIST_DIR"/
 echo ""
 echo "Upload these to GitHub Releases:"
-echo "  gh release create v${VERSION} $DIST_DIR/*.zip --title \"TeleProxy v${VERSION}\" --notes-file RELEASE_NOTES.md"
+echo "  gh release create v${VERSION} $DIST_DIR/*.zip --title \"ProxyTg v${VERSION}\" --notes-file RELEASE_NOTES.md"

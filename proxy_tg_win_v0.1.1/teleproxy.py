@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-TeleProxy — минимальный консольный менеджер прокси для Telegram.
+ProxyTg — минимальный консольный менеджер прокси для Telegram.
 Запускает Xray-core как subprocess и держит локальный SOCKS5 порт.
 """
 
@@ -11,6 +11,7 @@ import signal
 import time
 import json
 import argparse
+from urllib.parse import urlparse, parse_qs, unquote
 
 # Конфигурация по умолчанию
 XRAY_BINARY = r".\xray-core\xray.exe"
@@ -39,6 +40,78 @@ def find_xray() -> str:
             except FileNotFoundError:
                 pass
     return XRAY_BINARY
+
+
+def parse_vless_uri(uri: str) -> dict:
+    """Парсит VLESS URI вида vless://UUID@HOST:PORT?params#name."""
+    if not uri.startswith("vless://"):
+        print("Ошибка: ссылка должна начинаться с vless://")
+        sys.exit(1)
+    parsed = urlparse(uri)
+    if not parsed.hostname or not parsed.port or not parsed.username:
+        print("Ошибка: неверный формат VLESS URI")
+        print("Формат: vless://UUID@HOST:PORT?type=tcp&security=reality&pbk=KEY&sni=SNI&sid=SID&flow=FLOW")
+        sys.exit(1)
+    params = parse_qs(parsed.query)
+    return {
+        "id": unquote(parsed.username),
+        "address": parsed.hostname,
+        "port": parsed.port,
+        "flow": params.get("flow", [""])[0],
+        "security": params.get("security", [""])[0],
+        "sni": params.get("sni", [""])[0],
+        "pbk": params.get("pbk", [""])[0],
+        "sid": params.get("sid", [""])[0],
+        "fp": params.get("fp", ["chrome"])[0],
+        "network": params.get("type", ["tcp"])[0],
+    }
+
+
+def generate_config(vless: dict, socks_port: int = 2080) -> dict:
+    """Генерирует Xray-конфиг из распарсенного VLESS URI."""
+    config = {
+        "log": {"loglevel": "warning"},
+        "inbounds": [{
+            "port": socks_port,
+            "listen": "127.0.0.1",
+            "protocol": "socks",
+            "settings": {"auth": "noauth", "udp": True},
+            "tag": "socks-in",
+        }],
+        "outbounds": [
+            {
+                "protocol": "vless",
+                "settings": {
+                    "vnext": [{
+                        "address": vless["address"],
+                        "port": vless["port"],
+                        "users": [{
+                            "id": vless["id"],
+                            "encryption": "none",
+                            "flow": vless["flow"],
+                        }],
+                    }],
+                },
+                "streamSettings": {
+                    "network": vless["network"],
+                    "security": vless["security"],
+                    "realitySettings": {
+                        "fingerprint": vless["fp"],
+                        "serverName": vless["sni"],
+                        "password": vless["pbk"],
+                        "shortId": vless["sid"],
+                    },
+                },
+                "tag": "proxy",
+            },
+            {"protocol": "freedom", "tag": "direct"},
+        ],
+        "routing": {
+            "domainStrategy": "IPIfNonMatch",
+            "rules": [{"type": "field", "ip": ["geoip:private"], "outboundTag": "direct"}],
+        },
+    }
+    return config
 
 
 def load_config(config_path: str) -> dict:
@@ -75,7 +148,7 @@ def get_socks_port(config: dict) -> int:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="TeleProxy — локальный SOCKS5 прокси через Xray (VLESS/Reality)"
+        description="ProxyTg — локальный SOCKS5 прокси через Xray (VLESS/Reality)"
     )
     parser.add_argument(
         "-c", "--config",
@@ -86,6 +159,11 @@ def main():
         "-x", "--xray",
         default=None,
         help="Путь к бинарнику Xray (по умолчанию: .\\xray-core\\xray.exe или в PATH)",
+    )
+    parser.add_argument(
+        "-v", "--vless",
+        default=None,
+        help='VLESS URI (vless://UUID@HOST:PORT?...)',
     )
     parser.add_argument(
         "-q", "--quiet",
@@ -103,7 +181,16 @@ def main():
         print("Для Windows: Xray-windows-64.zip (amd64) или Xray-windows-arm64-v8a.zip")
         sys.exit(1)
 
-    config = load_config(config_path)
+    if args.vless:
+        vless = parse_vless_uri(args.vless)
+        config = generate_config(vless)
+        with open(config_path, "w", encoding="utf-8") as f:
+            json.dump(config, f, indent=2, ensure_ascii=False)
+        if not args.quiet:
+            print(f"Конфиг из VLESS URI сохранён: {config_path}")
+    else:
+        config = load_config(config_path)
+
     if not validate_config(config):
         sys.exit(1)
 
@@ -111,7 +198,7 @@ def main():
 
     if not args.quiet:
         print("=" * 50)
-        print("  TeleProxy — прокси для Telegram")
+        print("  ProxyTg — прокси для Telegram")
         print("=" * 50)
         print(f"  Xray:     {xray_path}")
         print(f"  Конфиг:   {config_path}")
