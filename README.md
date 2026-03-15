@@ -243,6 +243,7 @@ proxy_tg_v0.1.2/
 │   ├── README.md
 │   └── xray-core/
 │       ├── xray
+│       ├── LICENSE-Xray.txt   # MPL 2.0
 │       ├── geoip.dat
 │       └── geosite.dat
 │
@@ -252,6 +253,7 @@ proxy_tg_v0.1.2/
 │   ├── README.md
 │   └── xray-core/
 │       ├── xray
+│       ├── LICENSE-Xray.txt   # MPL 2.0
 │       ├── geoip.dat
 │       └── geosite.dat
 │
@@ -261,6 +263,7 @@ proxy_tg_v0.1.2/
     ├── README.md
     └── xray-core/
         ├── xray.exe
+        ├── LICENSE-Xray.txt   # MPL 2.0
         ├── wintun.dll
         ├── geoip.dat
         └── geosite.dat
@@ -305,6 +308,10 @@ Download a new binary from [releases](https://github.com/XTLS/Xray-core/releases
 - For debugging, set `"loglevel"` to `"debug"` in the config
 - The script does not require admin/root
 - Each platform folder is self-contained and can be distributed on its own
+
+## Third-party license
+
+The **Xray-core** binary in each `xray-core/` folder is distributed under the **Mozilla Public License 2.0 (MPL 2.0)**. The full license text is in `xray-core/LICENSE-Xray.txt`. Source: [XTLS/Xray-core](https://github.com/XTLS/Xray-core).
 
 ## License
 
