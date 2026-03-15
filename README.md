@@ -1,4 +1,4 @@
-# ProxyTg v0.1.1
+# ProxyTg
 
 **Минимальный консольный прокси-менеджер для Telegram.**
 
@@ -22,9 +22,9 @@
 
 | Платформа | Архив | Архитектура |
 |-----------|-------|-------------|
-| macOS | `ProxyTg_v0.1.1_mac_arm64.zip` | ARM64 (Apple Silicon) |
-| Linux | `ProxyTg_v0.1.1_linux_amd64.zip` | x86-64 (amd64) |
-| Windows | `ProxyTg_v0.1.1_win_amd64.zip` | x86-64 (amd64) |
+| macOS | `ProxyTg_v0.1.2_mac_arm64.zip` | ARM64 (Apple Silicon) |
+| Linux | `ProxyTg_v0.1.2_linux_amd64.zip` | x86-64 (amd64) |
+| Windows | `ProxyTg_v0.1.2_win_amd64.zip` | x86-64 (amd64) |
 
 Каждая папка — самодостаточный пакет: скрипт + бинарник Xray + geo-файлы.
 
@@ -153,7 +153,7 @@ python3 teleproxy.py
 **macOS / Linux:**
 
 ```bash
-cd proxy_tg_mac_v0.1.1    # или proxy_tg_linux_v0.1.1
+cd proxy_tg_mac_v0.1.2    # или proxy_tg_linux_v0.1.2
 python3 teleproxy.py
 ```
 
@@ -162,7 +162,7 @@ python3 teleproxy.py
 **Windows:**
 
 ```cmd
-cd proxy_tg_win_v0.1.1
+cd proxy_tg_win_v0.1.2
 python teleproxy.py
 ```
 
@@ -229,12 +229,12 @@ app = Client(
 ## Структура проекта
 
 ```
-proxy_tg_v0.1.1/
+proxy_tg_v0.1.2/
 │
 ├── README.md                        # этот файл
 ├── LICENSE
 │
-├── proxy_tg_mac_v0.1.1/            # macOS (ARM64 / Apple Silicon)
+├── proxy_tg_mac_v0.1.2/            # macOS (ARM64 / Apple Silicon)
 │   ├── teleproxy.py
 │   ├── client_config.json
 │   ├── README.md
@@ -243,7 +243,7 @@ proxy_tg_v0.1.1/
 │       ├── geoip.dat
 │       └── geosite.dat
 │
-├── proxy_tg_linux_v0.1.1/          # Linux (x86-64 / amd64)
+├── proxy_tg_linux_v0.1.2/          # Linux (x86-64 / amd64)
 │   ├── teleproxy.py
 │   ├── client_config.json
 │   ├── README.md
@@ -252,7 +252,7 @@ proxy_tg_v0.1.1/
 │       ├── geoip.dat
 │       └── geosite.dat
 │
-└── proxy_tg_win_v0.1.1/            # Windows (x86-64 / amd64)
+└── proxy_tg_win_v0.1.2/            # Windows (x86-64 / amd64)
     ├── teleproxy.py
     ├── client_config.json
     ├── README.md
@@ -284,7 +284,7 @@ curl --socks5 127.0.0.1:2080 https://api.telegram.org
 
 | Компонент | Версия |
 |-----------|--------|
-| ProxyTg | 0.1.1 |
+| ProxyTg | 0.1.2 |
 | Xray-core | 26.2.6 |
 
 ## Примечания
