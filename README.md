@@ -197,34 +197,6 @@ python3 teleproxy.py -q                       # тихий режим (без л
 | `-x`, `--xray` | Путь к бинарнику Xray |
 | `-q`, `--quiet` | Минимальный вывод |
 
-## Использование с Telethon / Pyrogram
-
-Запустите ProxyTg в одном терминале, бот — в другом:
-
-```python
-# Telethon
-from telethon import TelegramClient
-import socks
-
-client = TelegramClient(
-    "session",
-    api_id=YOUR_API_ID,
-    api_hash="YOUR_API_HASH",
-    proxy=(socks.SOCKS5, "127.0.0.1", 2080)
-)
-```
-
-```python
-# Pyrogram
-from pyrogram import Client
-
-app = Client(
-    "session",
-    api_id=YOUR_API_ID,
-    api_hash="YOUR_API_HASH",
-    proxy=dict(scheme="socks5", hostname="127.0.0.1", port=2080)
-)
-```
 
 ## Структура проекта
 
