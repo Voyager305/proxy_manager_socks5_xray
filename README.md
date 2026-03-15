@@ -1,61 +1,63 @@
 # ProxyTg
 
-**Минимальный консольный прокси-менеджер для Telegram.**
+**Minimal console proxy manager for Telegram.**
 
-Запускает [Xray-core](https://github.com/XTLS/Xray-core) как subprocess и поднимает локальный SOCKS5 порт. Без GUI, без root, без лишних зависимостей — только Python и один скрипт.
+Runs [Xray-core](https://github.com/XTLS/Xray-core) as a subprocess and exposes a local SOCKS5 port. No GUI, no root, no extra dependencies — just Python and one script.
 
-Поддерживает протокол **VLESS + Reality** — современный и устойчивый к блокировкам.
+Supports **VLESS + Reality** — a modern protocol resilient to blocking.
+
+**[Русская версия / Russian version](README_RU.md)**
 
 ---
 
-## Возможности
+## Features
 
-- Локальный SOCKS5 прокси для Telegram (десктоп и мобильный)
-- Поддержка VLESS + Reality (Xray-core 26+)
-- Работает на **macOS**, **Linux** и **Windows**
-- Запуск одной командой, без установки
-- Совместимость с Telethon, Pyrogram и любыми SOCKS5-клиентами
+- Local SOCKS5 proxy for Telegram (desktop and mobile)
+- VLESS + Reality support (Xray-core 26+)
+- Runs on **macOS**, **Linux**, and **Windows**
+- One-command run, no installation
+- Works with Telethon, Pyrogram, and any SOCKS5 client
 
-## Скачивание
+## Download
 
-Выберите архив для вашей ОС:
+Pick the archive for your OS:
 
-| Платформа | Архив | Архитектура |
-|-----------|-------|-------------|
+| Platform | Archive | Architecture |
+|----------|---------|--------------|
 | macOS | `ProxyTg_v0.1.2_mac_arm64.zip` | ARM64 (Apple Silicon) |
 | Linux | `ProxyTg_v0.1.2_linux_amd64.zip` | x86-64 (amd64) |
 | Windows | `ProxyTg_v0.1.2_win_amd64.zip` | x86-64 (amd64) |
 
-Каждая папка — самодостаточный пакет: скрипт + бинарник Xray + geo-файлы.
+Each archive is self-contained: script + Xray binary + geo data.
 
-## Требования
+## Requirements
 
 - **Python 3.7+**
-- Xray-core — уже включён в каждый пакет
+- Xray-core is included in each package
 
-## Быстрый старт
+## Quick start
 
-### 1. Заполните конфигурацию
+### 1. Set up configuration
 
-Отредактируйте `client_config.json` в папке для вашей ОС, подставив данные от вашего VLESS Reality сервера:
+Edit `client_config.json` in your platform folder with your VLESS Reality server details:
 
-| Поле | Описание |
-|------|----------|
-| `address` | IP-адрес или домен сервера |
-| `port` | Порт (обычно 443) |
-| `id` | UUID пользователя |
-| `flow` | `xtls-rprx-vision` для Reality |
-| `serverName` | SNI (например, `google.com`) |
-| `password` | Публичный ключ Reality |
-| `shortId` | Short ID (hex, до 16 символов) |
+| Field | Description |
+|-------|--------------|
+| `address` | Server IP or domain |
+| `port` | Port (usually 443) |
+| `id` | User UUID |
+| `flow` | `xtls-rprx-vision` for Reality |
+| `serverName` | SNI (e.g. `google.com`) |
+| `password` | Reality public key |
+| `shortId` | Short ID (hex, up to 16 chars) |
 
 <details>
-<summary><b>Как заполнить из VLESS-ссылки</b></summary>
+<summary><b>Filling from a VLESS link</b></summary>
 
-Если у вас есть ссылка вида `vless://uuid@host:port?...`, поля заполняются так:
+If you have a link like `vless://uuid@host:port?...`, map the fields as follows:
 
 ```
-vless://UUID@ADDRESS:PORT?type=tcp&security=reality&pbk=PASSWORD&fp=chrome&sni=SERVERNAME&sid=SHORTID&flow=xtls-rprx-vision#название
+vless://UUID@ADDRESS:PORT?type=tcp&security=reality&pbk=PASSWORD&fp=chrome&sni=SERVERNAME&sid=SHORTID&flow=xtls-rprx-vision#name
          │       │    │                                  │                       │            │
          ↓       ↓    ↓                                  ↓                       ↓            ↓
         id   address  port                            password              serverName      shortId
@@ -64,7 +66,7 @@ vless://UUID@ADDRESS:PORT?type=tcp&security=reality&pbk=PASSWORD&fp=chrome&sni=S
 </details>
 
 <details>
-<summary><b>Пример client_config.json</b></summary>
+<summary><b>Example client_config.json</b></summary>
 
 ```json
 {
@@ -130,83 +132,112 @@ vless://UUID@ADDRESS:PORT?type=tcp&security=reality&pbk=PASSWORD&fp=chrome&sni=S
 
 </details>
 
-### 2. Запустите
+### 2. Run
 
-Есть два способа — через VLESS-ссылку (проще) или через JSON-конфиг:
+Two options: VLESS link (easier) or JSON config.
 
-**Способ A — VLESS-ссылка (рекомендуется):**
+**Option A — VLESS link (recommended):**
 
 ```bash
 python3 teleproxy.py --vless "vless://UUID@HOST:PORT?type=tcp&security=reality&pbk=KEY&fp=chrome&sni=SNI&sid=SID&flow=xtls-rprx-vision#name"
 ```
 
-Конфиг сгенерируется и сохранится автоматически. При следующем запуске достаточно:
+Config is generated and saved. Next time just run:
 
 ```bash
 python3 teleproxy.py
 ```
 
-**Способ B — ручной JSON-конфиг:**
+**Option B — manual JSON config:**
 
-Заполните `client_config.json` (см. пример выше) и запустите.
+Fill in `client_config.json` (see example above) and run.
 
 **macOS / Linux:**
 
 ```bash
-cd proxy_tg_mac_v0.1.2    # или proxy_tg_linux_v0.1.2
+cd proxy_tg_mac_arm64_v0.1.2    # or proxy_tg_linux_amd64_v0.1.2
 python3 teleproxy.py
 ```
 
-> На Linux может потребоваться: `chmod +x xray-core/xray`
+> On Linux you may need: `chmod +x xray-core/xray`
 
 **Windows:**
 
 ```cmd
-cd proxy_tg_win_v0.1.2
+cd proxy_tg_win_amd64_v0.1.2
 python teleproxy.py
 ```
 
-### 3. Настройте Telegram
+### 3. Configure Telegram
 
-Откройте Telegram Desktop:
+In Telegram Desktop:
 
 **Settings → Data and Storage → Proxy → Add Proxy**
 
-| Параметр | Значение |
-|----------|----------|
+| Parameter | Value |
+|-----------|-------|
 | Type | SOCKS5 |
 | Host | `127.0.0.1` |
 | Port | `2080` |
 
-Telegram Mobile: Settings → Data and Storage → Proxy → SOCKS5 → те же параметры.
+On Telegram Mobile: Settings → Data and Storage → Proxy → SOCKS5 → same values.
 
-## Опции запуска
+## Command-line options
 
 ```bash
-python3 teleproxy.py                          # запуск с настройками по умолчанию
-python3 teleproxy.py --vless "vless://..."    # запуск из VLESS-ссылки (сохраняет конфиг)
-python3 teleproxy.py -c my_config.json        # другой конфиг
-python3 teleproxy.py -x /usr/local/bin/xray   # свой путь к Xray
-python3 teleproxy.py -q                       # тихий режим (без логов)
+python3 teleproxy.py                          # default config
+python3 teleproxy.py --vless "vless://..."    # from VLESS link (saves config)
+python3 teleproxy.py -c my_config.json        # custom config file
+python3 teleproxy.py -x /usr/local/bin/xray   # custom Xray path
+python3 teleproxy.py -q                        # quiet (minimal output)
 ```
 
-| Флаг | Описание |
-|------|----------|
-| `-v`, `--vless` | VLESS URI — автоматически генерирует и сохраняет конфиг |
-| `-c`, `--config` | Путь к JSON-конфигу (по умолчанию `client_config.json`) |
-| `-x`, `--xray` | Путь к бинарнику Xray |
-| `-q`, `--quiet` | Минимальный вывод |
+| Flag | Description |
+|------|-------------|
+| `-v`, `--vless` | VLESS URI — generates and saves config |
+| `-c`, `--config` | Path to JSON config (default: `client_config.json`) |
+| `-x`, `--xray` | Path to Xray binary |
+| `-q`, `--quiet` | Minimal output |
 
+## Using with Telethon / Pyrogram
 
-## Структура проекта
+Run ProxyTg in one terminal, your bot in another:
+
+```python
+# Telethon
+from telethon import TelegramClient
+import socks
+
+client = TelegramClient(
+    "session",
+    api_id=YOUR_API_ID,
+    api_hash="YOUR_API_HASH",
+    proxy=(socks.SOCKS5, "127.0.0.1", 2080)
+)
+```
+
+```python
+# Pyrogram
+from pyrogram import Client
+
+app = Client(
+    "session",
+    api_id=YOUR_API_ID,
+    api_hash="YOUR_API_HASH",
+    proxy=dict(scheme="socks5", hostname="127.0.0.1", port=2080)
+)
+```
+
+## Project structure
 
 ```
 proxy_tg_v0.1.2/
 │
-├── README.md                        # этот файл
+├── README.md
+├── README_RU.md
 ├── LICENSE
 │
-├── proxy_tg_mac_v0.1.2/            # macOS (ARM64 / Apple Silicon)
+├── proxy_tg_mac_arm64_v0.1.2/      # macOS (ARM64 / Apple Silicon)
 │   ├── teleproxy.py
 │   ├── client_config.json
 │   ├── README.md
@@ -215,7 +246,7 @@ proxy_tg_v0.1.2/
 │       ├── geoip.dat
 │       └── geosite.dat
 │
-├── proxy_tg_linux_v0.1.2/          # Linux (x86-64 / amd64)
+├── proxy_tg_linux_amd64_v0.1.2/    # Linux (x86-64 / amd64)
 │   ├── teleproxy.py
 │   ├── client_config.json
 │   ├── README.md
@@ -224,7 +255,7 @@ proxy_tg_v0.1.2/
 │       ├── geoip.dat
 │       └── geosite.dat
 │
-└── proxy_tg_win_v0.1.2/            # Windows (x86-64 / amd64)
+└── proxy_tg_win_amd64_v0.1.2/      # Windows (x86-64 / amd64)
     ├── teleproxy.py
     ├── client_config.json
     ├── README.md
@@ -237,44 +268,44 @@ proxy_tg_v0.1.2/
 
 ## FAQ
 
-**Q: macOS пишет «Файл «xray» не был открыт», Apple не может проверить разработчика. Что делать?**
-Бинарник Xray не подписан Apple (это нормально для open-source). Разрешить запуск можно так:
-- **Вариант 1:** Нажмите «Готово», затем откройте **Системные настройки → Конфиденциальность и безопасность** — внизу появится кнопка «Всё равно открыть» для этого приложения.
-- **Вариант 2:** В терминале из папки с проектом выполните:
+**Q: macOS says "The file 'xray' could not be opened", Apple can't verify the developer. What do I do?**  
+The Xray binary is not signed by Apple (normal for open-source). To allow it:
+- **Option 1:** Click "Done", then open **System Settings → Privacy & Security** — at the bottom you'll see "Open Anyway" for this app.
+- **Option 2:** In a terminal, from the project folder run:
   ```bash
   xattr -d com.apple.quarantine xray-core/xray
   ```
-  После этого `python3 teleproxy.py` запустит xray без предупреждения.
+  Then `python3 teleproxy.py` will run xray without the warning.
 
-**Q: Порт 2080 уже занят, как сменить?**
-Измените `"port": 2080` в `client_config.json` на любой свободный (например, 1080, 9050).
+**Q: Port 2080 is already in use. How do I change it?**  
+Change `"port": 2080` in `client_config.json` to any free port (e.g. 1080, 9050).
 
-**Q: Как проверить, что прокси работает?**
+**Q: How do I check that the proxy works?**
 ```bash
 curl --socks5 127.0.0.1:2080 https://api.telegram.org
 ```
-Если возвращает JSON — прокси работает.
+If you get JSON back, the proxy is working.
 
-**Q: Нужен ли свой сервер?**
-Да, вам нужен VPS с настроенным Xray-сервером (VLESS + Reality). Это серверная часть, ProxyTg — только клиент.
+**Q: Do I need my own server?**  
+Yes. You need a VPS with an Xray server (VLESS + Reality). That's the server side; ProxyTg is the client only.
 
-**Q: Как обновить Xray-core?**
-Скачайте новый бинарник с [releases](https://github.com/XTLS/Xray-core/releases) и замените файл в папке `xray-core/`.
+**Q: How do I update Xray-core?**  
+Download a new binary from [releases](https://github.com/XTLS/Xray-core/releases) and replace the file in the `xray-core/` folder.
 
-## Версии компонентов
+## Component versions
 
-| Компонент | Версия |
+| Component | Version |
 |-----------|--------|
 | ProxyTg | 0.1.2 |
 | Xray-core | 26.2.6 |
 
-## Примечания
+## Notes
 
-- В Xray 26+ поле публичного ключа Reality называется `password` (не `publicKey`)
-- Для отладки измените `"loglevel"` в конфиге на `"debug"`
-- Скрипт не требует прав администратора / root
-- Каждая платформенная папка полностью автономна — можно распространять отдельно
+- In Xray 26+ the Reality public key field is named `password` (not `publicKey`)
+- For debugging, set `"loglevel"` to `"debug"` in the config
+- The script does not require admin/root
+- Each platform folder is self-contained and can be distributed on its own
 
-## Лицензия
+## License
 
 [MIT](LICENSE)
