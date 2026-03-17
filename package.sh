@@ -1,7 +1,7 @@
 #!/bin/bash
 # Упаковка платформенных пакетов для GitHub Releases
 
-VERSION="0.1.2"
+VERSION="0.1.3"
 DIST_DIR="dist"
 
 rm -rf "$DIST_DIR"
