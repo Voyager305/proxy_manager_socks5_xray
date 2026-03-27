@@ -1,4 +1,4 @@
-## proxy_manager_socks5_xray v0.1.2
+## proxy_manager_socks5_xray v0.1.3
 
 ### English
 
@@ -6,10 +6,9 @@ Local SOCKS5 proxy manager powered by Xray-core (VLESS + Reality). Use with any 
 
 **What's new**
 
-- Application renamed to **proxy_manager_socks5_xray** (from ProxyTg)
-- Positioned as a universal SOCKS5 proxy for any application; Telegram is documented as one of the use cases
-- Platform folders and release archives no longer include version in names (e.g. `proxy_manager_socks5_xray_mac_arm64.zip`)
-- Xray-core binaries and geo data are now included in the repository (previously ignored by git)
+- Added a separate **Intel Mac** package: `proxy_manager_socks5_xray_mac_amd64.zip`
+- Packaging script now builds both macOS variants: `mac_arm64` and `mac_amd64`
+- Main documentation updated to include Intel macOS in download and run sections
 
 **Fixed / improved**
 
@@ -22,6 +21,7 @@ Local SOCKS5 proxy manager powered by Xray-core (VLESS + Reality). Use with any 
 | File | Platform | Architecture |
 |------|----------|--------------|
 | `proxy_manager_socks5_xray_mac_arm64.zip` | macOS | ARM64 (Apple Silicon) |
+| `proxy_manager_socks5_xray_mac_amd64.zip` | macOS | x86-64 (Intel) |
 | `proxy_manager_socks5_xray_linux_amd64.zip` | Linux | x86-64 (amd64) |
 | `proxy_manager_socks5_xray_win_amd64.zip` | Windows | x86-64 (amd64) |
 
@@ -35,7 +35,7 @@ Local SOCKS5 proxy manager powered by Xray-core (VLESS + Reality). Use with any 
 
 **Components**
 
-- proxy_manager_socks5_xray 0.1.2
+- proxy_manager_socks5_xray 0.1.3
 - Xray-core 26.2.6
 - Python 3.7+
 
@@ -47,10 +47,9 @@ Local SOCKS5 proxy manager powered by Xray-core (VLESS + Reality). Use with any 
 
 **Что нового**
 
-- Приложение переименовано в **proxy_manager_socks5_xray** (ранее ProxyTg)
-- Позиционируется как универсальный SOCKS5 прокси для любого приложения; Telegram описан как один из сценариев
-- В названиях папок и архивов релиза убрана версионность (например, `proxy_manager_socks5_xray_mac_arm64.zip`)
-- Ядра Xray и geo-файлы теперь включены в репозиторий (ранее были в .gitignore)
+- Добавлен отдельный пакет для **Intel Mac**: `proxy_manager_socks5_xray_mac_amd64.zip`
+- Скрипт упаковки теперь собирает обе версии macOS: `mac_arm64` и `mac_amd64`
+- Основная документация обновлена: добавлена Intel-версия macOS в разделы скачивания и запуска
 
 **Исправления и изменения**
 
@@ -63,6 +62,7 @@ Local SOCKS5 proxy manager powered by Xray-core (VLESS + Reality). Use with any 
 | Файл | Платформа | Архитектура |
 |------|-----------|-------------|
 | `proxy_manager_socks5_xray_mac_arm64.zip` | macOS | ARM64 (Apple Silicon) |
+| `proxy_manager_socks5_xray_mac_amd64.zip` | macOS | x86-64 (Intel) |
 | `proxy_manager_socks5_xray_linux_amd64.zip` | Linux | x86-64 (amd64) |
 | `proxy_manager_socks5_xray_win_amd64.zip` | Windows | x86-64 (amd64) |
 
@@ -76,6 +76,6 @@ Local SOCKS5 proxy manager powered by Xray-core (VLESS + Reality). Use with any 
 
 **Компоненты**
 
-- proxy_manager_socks5_xray 0.1.2
+- proxy_manager_socks5_xray 0.1.3
 - Xray-core 26.2.6
 - Python 3.7+
