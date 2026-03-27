@@ -140,13 +140,13 @@ Two options: VLESS link (easier) or JSON config.
 **Option A — VLESS link (recommended):**
 
 ```bash
-python3 teleproxy.py --vless "vless://UUID@HOST:PORT?type=tcp&security=reality&pbk=KEY&fp=chrome&sni=SNI&sid=SID&flow=xtls-rprx-vision#name"
+python3 app.py --vless "vless://UUID@HOST:PORT?type=tcp&security=reality&pbk=KEY&fp=chrome&sni=SNI&sid=SID&flow=xtls-rprx-vision#name"
 ```
 
 Config is generated and saved. Next time just run:
 
 ```bash
-python3 teleproxy.py
+python3 app.py
 ```
 
 **Option B — manual JSON config:**
@@ -157,7 +157,7 @@ Fill in `client_config.json` (see example above) and run.
 
 ```bash
 cd proxy_manager_socks5_xray_mac_arm64    # or proxy_manager_socks5_xray_mac_amd64 / proxy_manager_socks5_xray_linux_amd64
-python3 teleproxy.py
+python3 app.py
 ```
 
 > On Linux you may need: `chmod +x xray-core/xray`
@@ -166,7 +166,7 @@ python3 teleproxy.py
 
 ```cmd
 cd proxy_manager_socks5_xray_win_amd64
-python teleproxy.py
+python app.py
 ```
 
 The proxy will listen on **127.0.0.1:2080** (or the port set in config). Point any SOCKS5-capable app to this address.
@@ -232,11 +232,11 @@ app = Client(
 ## Command-line options
 
 ```bash
-python3 teleproxy.py                          # default config
-python3 teleproxy.py -v "vless://..."    # from VLESS link (saves config)
-python3 teleproxy.py -c my_config.json        # custom config file
-python3 teleproxy.py -x /usr/local/bin/xray   # custom Xray path
-python3 teleproxy.py -q                        # quiet (minimal output)
+python3 app.py                          # default config
+python3 app.py -v "vless://..."    # from VLESS link (saves config)
+python3 app.py -c my_config.json        # custom config file
+python3 app.py -x /usr/local/bin/xray   # custom Xray path
+python3 app.py -q                        # quiet (minimal output)
 ```
 
 | Flag | Description |
@@ -256,7 +256,7 @@ proxy_manager_socks5_xray/
 ├── LICENSE
 │
 ├── proxy_manager_socks5_xray_mac_arm64/      # macOS (ARM64 / Apple Silicon)
-│   ├── teleproxy.py
+│   ├── app.py
 │   ├── client_config.json
 │   ├── README.md
 │   └── xray-core/
@@ -266,7 +266,7 @@ proxy_manager_socks5_xray/
 │       └── geosite.dat
 │
 ├── proxy_manager_socks5_xray_mac_amd64/      # macOS (x86-64 / Intel)
-│   ├── teleproxy.py
+│   ├── app.py
 │   ├── client_config.json
 │   ├── README.md
 │   └── xray-core/
@@ -276,7 +276,7 @@ proxy_manager_socks5_xray/
 │       └── geosite.dat
 │
 ├── proxy_manager_socks5_xray_linux_amd64/    # Linux (x86-64 / amd64)
-│   ├── teleproxy.py
+│   ├── app.py
 │   ├── client_config.json
 │   ├── README.md
 │   └── xray-core/
@@ -286,7 +286,7 @@ proxy_manager_socks5_xray/
 │       └── geosite.dat
 │
 └── proxy_manager_socks5_xray_win_amd64/      # Windows (x86-64 / amd64)
-    ├── teleproxy.py
+    ├── app.py
     ├── client_config.json
     ├── README.md
     └── xray-core/
@@ -306,7 +306,7 @@ The Xray binary is not signed by Apple (normal for open-source). To allow it:
   ```bash
   xattr -d com.apple.quarantine xray-core/xray
   ```
-  Then `python3 teleproxy.py` will run xray without the warning.
+  Then `python3 app.py` will run xray without the warning.
 
 **Q: Port 2080 is already in use. How do I change it?**  
 Change `"port": 2080` in `client_config.json` to any free port (e.g. 1080, 9050).

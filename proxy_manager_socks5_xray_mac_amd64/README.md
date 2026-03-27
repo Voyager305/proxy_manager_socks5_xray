@@ -97,10 +97,10 @@ vless://UUID@ADDRESS:PORT?type=tcp&security=reality&pbk=PASSWORD&fp=chrome&sni=S
 2. **Запустите** (один из способов):
    ```bash
    # Способ A — из VLESS-ссылки (проще, конфиг сохранится автоматически):
-   python3 teleproxy.py --vless "vless://UUID@HOST:PORT?type=tcp&security=reality&pbk=KEY&fp=chrome&sni=SNI&sid=SID&flow=xtls-rprx-vision#name"
+   python3 app.py --vless "vless://UUID@HOST:PORT?type=tcp&security=reality&pbk=KEY&fp=chrome&sni=SNI&sid=SID&flow=xtls-rprx-vision#name"
 
    # Способ B — из JSON-конфига (заполните client_config.json вручную):
-   python3 teleproxy.py
+   python3 app.py
    ```
 
 3. **Укажите прокси в приложении:** SOCKS5, Host: `127.0.0.1`, Port: `2080`. Для Telegram: Settings → Data and Storage → Proxy → SOCKS5.
@@ -108,10 +108,10 @@ vless://UUID@ADDRESS:PORT?type=tcp&security=reality&pbk=PASSWORD&fp=chrome&sni=S
 ## Опции запуска
 
 ```bash
-python3 teleproxy.py --vless "vless://..."   # из VLESS-ссылки
-python3 teleproxy.py -c client_config.json   # другой конфиг
-python3 teleproxy.py -x /path/to/xray        # путь к бинарнику
-python3 teleproxy.py -q                      # тихий режим
+python3 app.py --vless "vless://..."   # из VLESS-ссылки
+python3 app.py -c client_config.json   # другой конфиг
+python3 app.py -x /path/to/xray        # путь к бинарнику
+python3 app.py -q                      # тихий режим
 ```
 
 ## Использование с Telethon
@@ -129,13 +129,13 @@ client = TelegramClient(
 )
 ```
 
-Запустите `teleproxy.py` в одном терминале, ваш бот — в другом.
+Запустите `app.py` в одном терминале, ваш бот — в другом.
 
 ## Структура проекта
 
 ```
 teleproxy/
-├── teleproxy.py        # основной скрипт
+├── app.py        # основной скрипт
 ├── client_config.json  # конфигурация (заполните своими данными)
 ├── README.md
 └── xray-core/          # компоненты Xray

@@ -23,7 +23,7 @@ Local SOCKS5 proxy manager powered by Xray-core (VLESS + Reality). Use with any 
 1. Download the archive for your OS
 2. Extract it
 3. Edit `client_config.json` — add your server details (or use `--vless "vless://..."`)
-4. Run: `python3 teleproxy.py` (macOS/Linux) or `python teleproxy.py` (Windows)
+4. Run: `python3 app.py` (macOS/Linux) or `python app.py` (Windows)
 5. Point any app to SOCKS5 `127.0.0.1:2080`. For Telegram: Settings → Advanced → Proxy server settings → Add proxy.
 
 **Components**
@@ -57,7 +57,7 @@ Local SOCKS5 proxy manager powered by Xray-core (VLESS + Reality). Use with any 
 1. Скачайте архив для вашей ОС
 2. Распакуйте
 3. Отредактируйте `client_config.json` — подставьте данные вашего сервера (или используйте флаг при запуске `--vless "vless://..."`)
-4. Запустите: `python3 teleproxy.py` (macOS/Linux) или `python teleproxy.py` (Windows)
+4. Запустите: `python3 app.py` (macOS/Linux) или `python app.py` (Windows)
 5. Укажите в любом приложении SOCKS5 `127.0.0.1:2080`. Для Telegram: Настройки → Продвинутые настройки → Настройки прокси сервера → Добавить прокси.
 
 **Компоненты**

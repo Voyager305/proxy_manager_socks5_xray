@@ -140,13 +140,13 @@ vless://UUID@ADDRESS:PORT?type=tcp&security=reality&pbk=PASSWORD&fp=chrome&sni=S
 **Способ A — VLESS-ссылка (рекомендуется):**
 
 ```bash
-python3 teleproxy.py --vless "vless://UUID@HOST:PORT?type=tcp&security=reality&pbk=KEY&fp=chrome&sni=SNI&sid=SID&flow=xtls-rprx-vision#name"
+python3 app.py --vless "vless://UUID@HOST:PORT?type=tcp&security=reality&pbk=KEY&fp=chrome&sni=SNI&sid=SID&flow=xtls-rprx-vision#name"
 ```
 
 Конфиг сгенерируется и сохранится. При следующем запуске достаточно:
 
 ```bash
-python3 teleproxy.py
+python3 app.py
 ```
 
 **Способ B — ручной JSON-конфиг:**
@@ -157,7 +157,7 @@ python3 teleproxy.py
 
 ```bash
 cd proxy_manager_socks5_xray_mac_arm64    # или proxy_manager_socks5_xray_mac_amd64 / proxy_manager_socks5_xray_linux_amd64
-python3 teleproxy.py
+python3 app.py
 ```
 
 > На Linux может потребоваться: `chmod +x xray-core/xray`
@@ -166,7 +166,7 @@ python3 teleproxy.py
 
 ```cmd
 cd proxy_manager_socks5_xray_win_amd64
-python teleproxy.py
+python app.py
 ```
 
 Прокси будет слушать **127.0.0.1:2080** (или порт из конфига). Укажите этот адрес в любом приложении с поддержкой SOCKS5.
@@ -232,11 +232,11 @@ app = Client(
 ## Опции запуска
 
 ```bash
-python3 teleproxy.py                          # запуск с настройками по умолчанию
-python3 teleproxy.py -v "vless://..."    # запуск из VLESS-ссылки (сохраняет конфиг)
-python3 teleproxy.py -c my_config.json        # другой конфиг
-python3 teleproxy.py -x /usr/local/bin/xray   # свой путь к Xray
-python3 teleproxy.py -q                        # тихий режим (без логов)
+python3 app.py                          # запуск с настройками по умолчанию
+python3 app.py -v "vless://..."    # запуск из VLESS-ссылки (сохраняет конфиг)
+python3 app.py -c my_config.json        # другой конфиг
+python3 app.py -x /usr/local/bin/xray   # свой путь к Xray
+python3 app.py -q                        # тихий режим (без логов)
 ```
 
 | Флаг | Описание |
@@ -256,7 +256,7 @@ proxy_manager_socks5_xray/
 ├── LICENSE
 │
 ├── proxy_manager_socks5_xray_mac_arm64/      # macOS (ARM64 / Apple Silicon)
-│   ├── teleproxy.py
+│   ├── app.py
 │   ├── client_config.json
 │   ├── README.md
 │   └── xray-core/
@@ -266,7 +266,7 @@ proxy_manager_socks5_xray/
 │       └── geosite.dat
 │
 ├── proxy_manager_socks5_xray_mac_amd64/      # macOS (x86-64 / Intel)
-│   ├── teleproxy.py
+│   ├── app.py
 │   ├── client_config.json
 │   ├── README.md
 │   └── xray-core/
@@ -276,7 +276,7 @@ proxy_manager_socks5_xray/
 │       └── geosite.dat
 │
 ├── proxy_manager_socks5_xray_linux_amd64/   # Linux (x86-64 / amd64)
-│   ├── teleproxy.py
+│   ├── app.py
 │   ├── client_config.json
 │   ├── README.md
 │   └── xray-core/
@@ -286,7 +286,7 @@ proxy_manager_socks5_xray/
 │       └── geosite.dat
 │
 └── proxy_manager_socks5_xray_win_amd64/     # Windows (x86-64 / amd64)
-    ├── teleproxy.py
+    ├── app.py
     ├── client_config.json
     ├── README.md
     └── xray-core/
@@ -306,7 +306,7 @@ proxy_manager_socks5_xray/
   ```bash
   xattr -d com.apple.quarantine xray-core/xray
   ```
-  После этого `python3 teleproxy.py` запустит xray без предупреждения.
+  После этого `python3 app.py` запустит xray без предупреждения.
 
 **В: Порт 2080 уже занят, как сменить?**  
 Измените `"port": 2080` в `client_config.json` на любой свободный (например, 1080, 9050).
