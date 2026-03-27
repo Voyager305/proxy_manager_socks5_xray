@@ -24,6 +24,7 @@ pack() {
 }
 
 pack mac arm64
+pack mac amd64
 pack linux amd64
 pack win amd64
 

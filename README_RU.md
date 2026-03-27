@@ -25,6 +25,7 @@
 | Платформа | Архив | Архитектура |
 |-----------|-------|-------------|
 | macOS | `proxy_manager_socks5_xray_mac_arm64.zip` | ARM64 (Apple Silicon) |
+| macOS | `proxy_manager_socks5_xray_mac_amd64.zip` | x86-64 (Intel) |
 | Linux | `proxy_manager_socks5_xray_linux_amd64.zip` | x86-64 (amd64) |
 | Windows | `proxy_manager_socks5_xray_win_amd64.zip` | x86-64 (amd64) |
 
@@ -155,7 +156,7 @@ python3 teleproxy.py
 **macOS / Linux:**
 
 ```bash
-cd proxy_manager_socks5_xray_mac_arm64    # или proxy_manager_socks5_xray_linux_amd64
+cd proxy_manager_socks5_xray_mac_arm64    # или proxy_manager_socks5_xray_mac_amd64 / proxy_manager_socks5_xray_linux_amd64
 python3 teleproxy.py
 ```
 
@@ -257,6 +258,16 @@ proxy_manager_socks5_xray/
 ├── LICENSE
 │
 ├── proxy_manager_socks5_xray_mac_arm64/      # macOS (ARM64 / Apple Silicon)
+│   ├── teleproxy.py
+│   ├── client_config.json
+│   ├── README.md
+│   └── xray-core/
+│       ├── xray
+│       ├── LICENSE-Xray.txt   # MPL 2.0
+│       ├── geoip.dat
+│       └── geosite.dat
+│
+├── proxy_manager_socks5_xray_mac_amd64/      # macOS (x86-64 / Intel)
 │   ├── teleproxy.py
 │   ├── client_config.json
 │   ├── README.md
