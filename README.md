@@ -187,7 +187,7 @@ python app.py
 
 The proxy will listen on **127.0.0.1:2080** (or the port set in config). Point any SOCKS5-capable app to this address.
 
-### Command-line options
+**Command-line options:**
 
 ```bash
 python3 app.py                          # default config
