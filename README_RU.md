@@ -212,14 +212,6 @@ curl --socks5 127.0.0.1:2080 https://api.telegram.org
 - **curl / wget** — например: `curl --socks5 127.0.0.1:2080 https://example.com`
 - **Любым приложением** с поддержкой SOCKS5 (мессенджеры, IDE и т.д.)
 
-Проверка работы:
-
-```bash
-curl --socks5 127.0.0.1:2080 https://api.telegram.org
-```
-
-Если возвращается JSON — прокси работает.
-
 ## Использование с Telegram
 
 Как настроить:

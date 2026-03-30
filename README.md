@@ -187,6 +187,16 @@ python app.py
 
 The proxy will listen on **127.0.0.1:2080** (or the port set in config). Point any SOCKS5-capable app to this address.
 
+### 3. Quick check
+
+Verify that traffic really goes through local SOCKS5:
+
+```bash
+curl --socks5 127.0.0.1:2080 https://api.telegram.org
+```
+
+If you get JSON back, the proxy is up.
+
 ## Using with other applications
 
 The proxy is a standard **SOCKS5** server on `127.0.0.1:2080` (no auth). Use it with:
@@ -194,14 +204,6 @@ The proxy is a standard **SOCKS5** server on `127.0.0.1:2080` (no auth). Use it 
 - **Browsers** — set system or browser proxy to SOCKS5, host `127.0.0.1`, port `2080`
 - **curl / wget** — e.g. `curl --socks5 127.0.0.1:2080 https://example.com`
 - **Any app** that supports SOCKS5 proxy (messengers, IDE, etc.)
-
-To verify it works:
-
-```bash
-curl --socks5 127.0.0.1:2080 https://api.telegram.org
-```
-
-If you get JSON back, the proxy is up.
 
 ## Using with Telegram
 
