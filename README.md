@@ -60,7 +60,21 @@ There are two valid options:
 - **A: from a VLESS link (easier and faster)** — config is generated automatically on run.
 - **B: manual `client_config.json`** — use this if you prefer full control over JSON.
 
-**For option B (manual JSON):**
+### 2. Run with your selected method
+
+**Option A — VLESS link (recommended):**
+
+```bash
+python3 app.py --vless "vless://UUID@HOST:PORT?type=tcp&security=reality&pbk=KEY&fp=chrome&sni=SNI&sid=SID&flow=xtls-rprx-vision#name"
+```
+
+Config is generated and saved. Next time just run:
+
+```bash
+python3 app.py
+```
+
+**Option B — manual JSON config:**
 
 Edit `client_config.json` in your platform folder with your VLESS Reality server details:
 
@@ -155,25 +169,7 @@ vless://UUID@ADDRESS:PORT?type=tcp&security=reality&pbk=PASSWORD&fp=chrome&sni=S
 
 </details>
 
-### 2. Run with your selected method
-
-**Option A — VLESS link (recommended):**
-
-```bash
-python3 app.py --vless "vless://UUID@HOST:PORT?type=tcp&security=reality&pbk=KEY&fp=chrome&sni=SNI&sid=SID&flow=xtls-rprx-vision#name"
-```
-
-Config is generated and saved. Next time just run:
-
-```bash
-python3 app.py
-```
-
-**Option B — manual JSON config:**
-
-If you filled in `client_config.json` (see above), run:
-
-**macOS / Linux:**
+**Run on macOS / Linux:**
 
 ```bash
 cd proxy_manager_socks5_xray_mac_arm64    # or proxy_manager_socks5_xray_mac_amd64 / proxy_manager_socks5_xray_linux_amd64
