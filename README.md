@@ -10,6 +10,21 @@ Supports **VLESS + Reality** — a modern protocol resilient to blocking.
 
 ---
 
+## How it works
+
+Traffic flow:
+
+`App (Telegram/browser/CLI) -> local SOCKS5 127.0.0.1:2080 -> Xray (on your PC) -> VLESS+Reality server -> internet`
+
+Step by step:
+
+1. You start `app.py`.
+2. The script reads `client_config.json` (or generates it from `--vless`) and launches the local `xray` binary as a subprocess.
+3. Xray opens a **local SOCKS5 inbound** on `127.0.0.1:2080` (port is configurable).
+4. Any app configured to use this SOCKS5 sends traffic to local Xray.
+5. Xray forwards traffic through **VLESS + Reality outbound** to your remote server.
+6. With the current routing rule, `geoip:private` addresses go `direct`, while the rest goes through `proxy`.
+
 ## Features
 
 - Local SOCKS5 proxy for any application (browsers, Telegram, etc.)
