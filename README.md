@@ -187,6 +187,23 @@ python app.py
 
 The proxy will listen on **127.0.0.1:2080** (or the port set in config). Point any SOCKS5-capable app to this address.
 
+## Command-line options
+
+```bash
+python3 app.py                          # default config
+python3 app.py -v "vless://..."    # from VLESS link (saves config)
+python3 app.py -c my_config.json        # custom config file
+python3 app.py -x /usr/local/bin/xray   # custom Xray path
+python3 app.py -q                        # quiet (minimal output)
+```
+
+| Flag | Description |
+|------|-------------|
+| `-v`, `--vless` | VLESS URI — generates and saves config |
+| `-c`, `--config` | Path to JSON config (default: `client_config.json`) |
+| `-x`, `--xray` | Path to Xray binary |
+| `-q`, `--quiet` | Minimal output |
+
 ### 3. Quick check
 
 Verify that traffic really goes through local SOCKS5:
@@ -246,23 +263,6 @@ app = Client(
     proxy=dict(scheme="socks5", hostname="127.0.0.1", port=2080)
 )
 ```
-
-## Command-line options
-
-```bash
-python3 app.py                          # default config
-python3 app.py -v "vless://..."    # from VLESS link (saves config)
-python3 app.py -c my_config.json        # custom config file
-python3 app.py -x /usr/local/bin/xray   # custom Xray path
-python3 app.py -q                        # quiet (minimal output)
-```
-
-| Flag | Description |
-|------|-------------|
-| `-v`, `--vless` | VLESS URI — generates and saves config |
-| `-c`, `--config` | Path to JSON config (default: `client_config.json`) |
-| `-x`, `--xray` | Path to Xray binary |
-| `-q`, `--quiet` | Minimal output |
 
 ## Project structure
 
@@ -347,7 +347,7 @@ Download a new binary from [releases](https://github.com/XTLS/Xray-core/releases
 - In Xray 26+ the Reality public key field is named `password` (not `publicKey`)
 - For debugging, set `"loglevel"` to `"debug"` in the config
 - The script does not require admin/root
-- Each platform folder is self-contained and can be distributed on its own
+- Each platform folder is self-contained
 
 ## Third-party license
 
