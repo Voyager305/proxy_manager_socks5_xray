@@ -53,7 +53,14 @@ Each archive is self-contained: script + Xray binary + geo data.
 
 ## Quick start
 
-### 1. Set up configuration
+### 1. Choose setup method (A is recommended)
+
+There are two valid options:
+
+- **A: from a VLESS link (easier and faster)** — config is generated automatically on run.
+- **B: manual `client_config.json`** — use this if you prefer full control over JSON.
+
+**For option B (manual JSON):**
 
 Edit `client_config.json` in your platform folder with your VLESS Reality server details:
 
@@ -148,9 +155,7 @@ vless://UUID@ADDRESS:PORT?type=tcp&security=reality&pbk=PASSWORD&fp=chrome&sni=S
 
 </details>
 
-### 2. Run
-
-Two options: VLESS link (easier) or JSON config.
+### 2. Run with your selected method
 
 **Option A — VLESS link (recommended):**
 
@@ -166,7 +171,7 @@ python3 app.py
 
 **Option B — manual JSON config:**
 
-Fill in `client_config.json` (see example above) and run.
+If you filled in `client_config.json` (see above), run:
 
 **macOS / Linux:**
 
