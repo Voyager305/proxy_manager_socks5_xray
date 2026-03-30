@@ -176,7 +176,7 @@ vless://UUID@ADDRESS:PORT?type=tcp&security=reality&pbk=PASSWORD&fp=chrome&sni=S
 
 </details>
 
-** Запуск для macOS / Linux:**
+**Запуск для macOS / Linux:**
 
 ```bash
 cd proxy_manager_socks5_xray_mac_arm64    # или proxy_manager_socks5_xray_mac_amd64 / proxy_manager_socks5_xray_linux_amd64
