@@ -192,6 +192,20 @@ cd proxy_manager_socks5_xray_win_amd64
 python app.py
 ```
 
+Быстрый запуск через bat-файл:
+
+```cmd
+cd proxy_manager_socks5_xray_win_amd64
+run_proxy.bat
+```
+
+В папке `proxy_manager_socks5_xray_win_amd64` уже есть `run_proxy.bat`.
+Его можно запускать:
+
+- двойным кликом;
+- из `.lnk`-ярлыка (ПКМ по `run_proxy.bat` -> **Создать ярлык**);
+- с параметрами, например: `run_proxy.bat -q` или `run_proxy.bat -c my_config.json`.
+
 Прокси будет слушать **127.0.0.1:2080** (или порт из конфига). Укажите этот адрес в любом приложении с поддержкой SOCKS5.
 
 **Опции запуска:**
