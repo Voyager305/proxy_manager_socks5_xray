@@ -10,4 +10,4 @@ __pycache__/
 
 # Release archives
 dist/
-package.sh/
+package.sh
