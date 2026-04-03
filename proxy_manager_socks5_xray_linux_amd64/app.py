@@ -1,9 +1,4 @@
 #!/usr/bin/env python3
-"""
-proxy_manager_socks5_xray — локальный SOCKS5 прокси через Xray (VLESS/Reality).
-Подходит для любого приложения с поддержкой SOCKS5; изначально делался под Telegram.
-"""
-
 import subprocess
 import sys
 import os
